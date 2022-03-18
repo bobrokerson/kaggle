@@ -6,42 +6,49 @@ Created on Fri Mar 11 23:08:36 2022
 @author: jimmy
 """
 
-""" 11. Write a Pandas program to sort a given Series."""
+""" 17.Write a Pandas program to get the items of a given series not 
+present in another given series"""
+
 import pandas as pd
+dataset_1 = pd.Series([1,2,3,4,5])
+dataset_2 = pd.Series([2,4,6,8,10])
 
-dataset = pd.Series(['100','200','python', '300.12','400']).sort_values()
+print(f"sr1: \n{dataset_1},\nsr2: \n{dataset_2}")
 
-print(f"Dataset sorted: \n{dataset}")
+output = dataset_1[~dataset_1.isin(dataset_2)]
+print(output)
 
-""" 12.Write a Pandas program to add some data to an existing Series"""
+""" 18.Write a Pandas program to compute the minimum, 25th percentile, median, 75th, and maximum of a given series"""
 
-dataset_1 = dataset.append(pd.Series(['500','php']))
+import numpy as np
 
-print(f"\nConcatenate dataset: \n{dataset_1}\n")
+dataset_3 =np.random.RandomState(100)
+dataset_4 = pd.Series(dataset_3.normal(10,4,20))
+print(f"\nData about dataset: \n{dataset_4.describe()}")
 
-""" 13.Write a Pandas program to create a subset of a given series based on value and condition"""
+output = np.percentile(dataset_4, q=[0, 25, 50, 75, 100])
+print(f"Second option: {output}")
 
-dataset_2 = pd.Series([0,1,2,3,4,5,6,7,8,9,10])
-val = int(input('Input data:'))
-#dataset_3 = dataset_2.iloc[:6]
 
-def equal(x,y):
-    xy = x[x<y]
-    return xy
+""" 19. Write a Pandas program to calculate the frequency counts of each unique value of a given series"""
 
-print(equal(dataset_2,val))
+dataset_5 = pd.Series(np.take(list('0123456789'), np.random.randint(10, size=40)))
+print(dataset_5)
+out = dataset_5.value_counts()
+print(out)
 
-""" 14.Write a Pandas program to change the order of index of a given series """
+""" 20. Write a Pandas program to display most frequent value in a given series and replace everything else as 'Other' in the series"""
 
-dataset_3 = pd.Series([1,2,3,4,5], index =['A','B','C','D','E'])
-re_index = dataset_3.reindex(index =['B','A','C','D','E'])
-print(f"\nReindex: \n{re_index}")
+dataset_6 = pd.Series(np.take(list('01234'), np.random.randint(5, size=15)))
+print(dataset_6)
+print(f"\n{dataset_6.value_counts()}")
 
-""" 15. Write a Pandas program to create the mean and standard deviation of the data of a given Series"""
+outputs = dataset_6[~dataset_6.isin(dataset_6.value_counts().index[:1])] = 'other'
 
-dataset_4 = pd.Series(data = [1,2,3,4,5,6,7,8,9,5,3])
+print(dataset_6)
 
-print(f"\nMean: {dataset_4.mean()}")
-print(f"\nSTD: {dataset_4.std()}")
+
+
+
 
 

@@ -6,55 +6,49 @@ Created on Fri Mar 11 23:08:36 2022
 @author: jimmy
 """
 
-""" 21.Write a Pandas program to find the positions of numbers that are multiples of 5 of a given series"""
 
+""" 26.Write a Pandas program to compute difference of differences between consecutive numbers of a given series. """
 import pandas as pd
-import numpy as np
 
-dataset_1 = pd.Series(np.random.randint(1, 10, 9))
+dataset = pd.Series([1,3,5,8,10,11,15])
+dataset_1 = dataset.diff()
+dataset_2 = dataset_1.diff()
 
-out = np.where(dataset_1 % 5==0)
+print(f"{dataset} \n{dataset_1.tolist()} \n{dataset_2.tolist()}")
+print(dataset.tolist())
 
-print(f"\ndataset: \n{dataset_1} \nPositions of numbers that are multiples of 5: {out}")
+""" 27. Write a Pandas program to convert a series of date strings to a timeseries"""
 
+dataset_3 = pd.Series(['01 Jan 2015','10-02-2016','20180307','2014/05/06','2016-04-12','2019-04-06T11:20'])
+dataset_3_conv = pd.to_datetime(dataset_3)
+print(f"{dataset_3}, \n{dataset_3_conv}")
 
-"""22.Write a Pandas program to extract items at given positions of a given series."""
+"""28. Write a Pandas program to get the day of month, day of year, week number and day of week from a given series of date strings."""
+from dateutil.parser import parse
 
-dataset_2 = pd.Series(list('2390238923902390239023'))
-element = [0, 2, 6, 11, 21]
-result = dataset_2.take(element)
-print(f"{dataset_2},\n{result}")
-
-
-""" 23. Write a Pandas program to get the positions of items of a given series in another given series"""
-
-dataset_3 = pd.Series(np.arange(1,11))
-dataset_4 = pd.Series([1,3,5,7,10])
-print(f"dataset: {dataset_3} \n{dataset_4}")
-res = [pd.Index(dataset_3).get_loc(i) for i in dataset_4]
-
-print(f"Positions of items of series2 in series1: {res}")
-
-"""24. Write a Pandas program convert the first and last character of each word to upper case in each word of a given series"""
-
-dataset_5 = pd.Series(['php','python','java','c#'])
-#output = [pd.Series(dataset_5).lower(i) for i in dataset_5]
-output = dataset_5.map(lambda x: x[0].upper() + x[1:-1] + x[-1].upper())
-print(f"First and last character of each word to upper case: \n{output}")
+dataset_5 = dataset_3.map(lambda x: parse(x))
+dataset_day = dataset_5.dt.day.tolist()
+dataset_month = dataset_5.dt.month.tolist()
+dataset_dayofyear = dataset_5.dt.dayofyear.tolist()
+dataset_weekofyear = dataset_5.dt.isocalendar().week.tolist()
+dataset_weekday = dataset_5.dt.day_name().tolist()
 
 
+print(f"{dataset_5}, \nDay of month: {dataset_day}, \nMonth: {dataset_month}, \nDay of year: {dataset_dayofyear}, \nWeek number: {dataset_weekofyear}, \nDay of week: {dataset_weekday}")
 
-""" 25. Write a Pandas program to calculate the number of characters in each word in a given series"""
+""" 29. Write a Pandas program to convert year-month string to dates adding a specified day of the month"""
 
-dataset_6 = pd.Series(['php','python','java','c#'])
-dataset_7 = dataset_6.str.title()
-fin = dataset_7.map(lambda calc: len(calc))
-print(f"\nDataset: \n{dataset_7} \n{fin}")
+dataset_6 = pd.Series(['Jan 2015','Feb 2016','Mar 2017','Apr 2018','May 2019'])
+dataset_7 = pd.to_datetime(dataset_6) 
+dataset_8 = dataset_6.map(lambda x: parse('05'+x))
+print(f"{dataset_8}")
 
+""" 30. Write a Pandas program to filter words from a given series that contain atleast two vowels"""
+from collections import Counter
+dataset_9 = pd.Series(['Red','Green','Orange','Pink','Yellow','White'])
+output = dataset_9.map(lambda x:sum([Counter(x.lower()).get(i, 0) for i in list('aeiou')]) >= 2)
 
-
-
-
+print(f"{dataset_9[output]}")
 
 
 

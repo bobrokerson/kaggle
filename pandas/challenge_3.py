@@ -6,46 +6,53 @@ Created on Fri Mar 11 23:08:36 2022
 @author: jimmy
 """
 
-""" 17.Write a Pandas program to get the items of a given series not 
-present in another given series"""
+""" 21.Write a Pandas program to find the positions of numbers that are multiples of 5 of a given series"""
 
 import pandas as pd
-dataset_1 = pd.Series([1,2,3,4,5])
-dataset_2 = pd.Series([2,4,6,8,10])
-
-print(f"sr1: \n{dataset_1},\nsr2: \n{dataset_2}")
-
-output = dataset_1[~dataset_1.isin(dataset_2)]
-print(output)
-
-""" 18.Write a Pandas program to compute the minimum, 25th percentile, median, 75th, and maximum of a given series"""
-
 import numpy as np
 
-dataset_3 =np.random.RandomState(100)
-dataset_4 = pd.Series(dataset_3.normal(10,4,20))
-print(f"\nData about dataset: \n{dataset_4.describe()}")
+dataset_1 = pd.Series(np.random.randint(1, 10, 9))
 
-output = np.percentile(dataset_4, q=[0, 25, 50, 75, 100])
-print(f"Second option: {output}")
+out = np.where(dataset_1 % 5==0)
+
+print(f"\ndataset: \n{dataset_1} \nPositions of numbers that are multiples of 5: {out}")
 
 
-""" 19. Write a Pandas program to calculate the frequency counts of each unique value of a given series"""
+"""22.Write a Pandas program to extract items at given positions of a given series."""
 
-dataset_5 = pd.Series(np.take(list('0123456789'), np.random.randint(10, size=40)))
-print(dataset_5)
-out = dataset_5.value_counts()
-print(out)
+dataset_2 = pd.Series(list('2390238923902390239023'))
+element = [0, 2, 6, 11, 21]
+result = dataset_2.take(element)
+print(f"{dataset_2},\n{result}")
 
-""" 20. Write a Pandas program to display most frequent value in a given series and replace everything else as 'Other' in the series"""
 
-dataset_6 = pd.Series(np.take(list('01234'), np.random.randint(5, size=15)))
-print(dataset_6)
-print(f"\n{dataset_6.value_counts()}")
+""" 23. Write a Pandas program to get the positions of items of a given series in another given series"""
 
-outputs = dataset_6[~dataset_6.isin(dataset_6.value_counts().index[:1])] = 'other'
+dataset_3 = pd.Series(np.arange(1,11))
+dataset_4 = pd.Series([1,3,5,7,10])
+print(f"dataset: {dataset_3} \n{dataset_4}")
+res = [pd.Index(dataset_3).get_loc(i) for i in dataset_4]
 
-print(dataset_6)
+print(f"Positions of items of series2 in series1: {res}")
+
+"""24. Write a Pandas program convert the first and last character of each word to upper case in each word of a given series"""
+
+dataset_5 = pd.Series(['php','python','java','c#'])
+#output = [pd.Series(dataset_5).lower(i) for i in dataset_5]
+output = dataset_5.map(lambda x: x[0].upper() + x[1:-1] + x[-1].upper())
+print(f"First and last character of each word to upper case: \n{output}")
+
+
+
+""" 25. Write a Pandas program to calculate the number of characters in each word in a given series"""
+
+dataset_6 = pd.Series(['php','python','java','c#'])
+dataset_7 = dataset_6.str.title()
+fin = dataset_7.map(lambda calc: len(calc))
+print(f"\nDataset: \n{dataset_7} \n{fin}")
+
+
+
 
 
 
