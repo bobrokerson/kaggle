@@ -11,7 +11,7 @@ Created on Mon Mar  7 15:38:47 2022
 import pandas as pd
 
 """1.Write a Pandas program to create and display a one-dimensional 
-array-like object containing an array of data using Pandas module
+array-like object containing an array of data using Pandas module new version
 """
 data = [2,4,8,16]
 
